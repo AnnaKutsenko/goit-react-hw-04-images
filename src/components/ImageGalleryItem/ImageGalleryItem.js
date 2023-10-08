@@ -1,27 +1,20 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { GalleryWrap, GalleryImg } from './ImageGalleryItem.styled';
 import { Modal } from '../Modal/Modal';
 
-export class ImageGalleryItem extends Component {
-    state = {
-        showModal: false,
-    };
+export const ImageGalleryItem = ({image}) => {
+    const [showModal, setShowModal] = useState(false);
     
-    toogleModal = () => {
-        this.setState(prevState => ({ showModal: !prevState.showModal }))
+    const toogleModal = () => {
+        setShowModal( prevShowModal=> !prevShowModal )
     };
 
-    render() {
-        const { image } = this.props;
-        const { showModal } = this.state;
-
-        return (
-            <>
-                <GalleryWrap onClick={this.toogleModal}>
-                    <GalleryImg src={image.webformatURL} alt={image.tags} />
-                </GalleryWrap>
-                {showModal && <Modal image={image} onClose={this.toogleModal} />}
-            </>
-        );
-    }
+    return (
+        <>
+            <GalleryWrap onClick={toogleModal}>
+                <GalleryImg src={image.webformatURL} alt={image.tags} />
+            </GalleryWrap>
+            {showModal && <Modal image={image} onClose={toogleModal} />}
+        </>
+    );
 }
